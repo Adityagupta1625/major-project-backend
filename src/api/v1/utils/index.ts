@@ -1,5 +1,5 @@
-import auth from "./googleAuth";
+import googleAuth from './googleAuth'
 
 export{
-    auth
+    googleAuth
 }

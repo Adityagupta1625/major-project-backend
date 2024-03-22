@@ -3,7 +3,7 @@ import { placementFormCRUD } from '../crud'
 import { Request, Response } from 'express'
 import { PlacementFormInterface } from '../types'
 import { google } from 'googleapis'
-import { auth } from '../utils'
+import {googleAuth} from '../utils'
 
 class PlacementFormController extends BaseController<PlacementFormInterface> {
   constructor() {
@@ -12,6 +12,7 @@ class PlacementFormController extends BaseController<PlacementFormInterface> {
 
   public async addController(req: Request, res: Response): Promise<Response> {
     try {
+      const auth=googleAuth()
       
       const form = google.forms({
         version: 'v1',

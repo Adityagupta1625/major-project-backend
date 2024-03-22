@@ -1,6 +1,8 @@
 import { google } from "googleapis"
 
-const SCOPES = [
+
+export const googleAuth=()=>{
+  const SCOPES = [
     'https://www.googleapis.com/auth/forms',
     'https://www.googleapis.com/auth/drive',
     'https://www.googleapis.com/auth/drive.file',
@@ -13,7 +15,7 @@ const SCOPES = [
       type: process.env.GOOGLE_FORM_TYPE,
       project_id: process.env.GOOGLE_FORM_PROJECT_ID,
       private_key_id: process.env.GOOGLE_FORM_PRIVATE_KEY_ID,
-      private_key: (process.env.GOOGLE_FORM_PRIVATE_KEY as string).replace(
+      private_key: (process.env.GOOGLE_FORM_PRIVATE_KEY as string ?? '').replace(
         /\\n/g,
         '\n'
       ),
@@ -24,4 +26,7 @@ const SCOPES = [
     scopes: SCOPES,
   })
 
-export default auth
+  return auth
+}
+
+export default googleAuth
