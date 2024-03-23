@@ -4,6 +4,7 @@ import userController from "./user.controller";
 import userProfileController from "./userProfile.controller";
 import authController from "./auth.controller";
 import placementFormController from "./placementForm.controller";
+import formResponseController from "./formResponses.controller";
 
 export {
     announcementController,
@@ -11,5 +12,6 @@ export {
     userController,
     userProfileController,
     authController,
-    placementFormController
+    placementFormController,
+    formResponseController
 }

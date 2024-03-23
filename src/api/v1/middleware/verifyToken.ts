@@ -34,7 +34,8 @@ export const validateToken = (
               if (result === null) {
                 res.status(401).json({ message: 'Invalid Token' })
               } else {
-                (req as any).user=result
+                req.query.userId=result._id
+                req.query.userRole=result.role
                 next()
               }
             })
