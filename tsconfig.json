@@ -8,7 +8,9 @@
     "outDir": "dist",
     "rootDir": "./src",
     "experimentalDecorators": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": ["babel_generator"],
+    "typeRoots": ["node_modules/@types", "src/**/*.d.ts"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"],
   "exclude": ["node_modules"],

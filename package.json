@@ -27,6 +27,7 @@
   "dependencies": {
     "@googleapis/drive": "^8.7.0",
     "@googleapis/forms": "^2.0.5",
+    "@types/babel-generator": "^6.25.8",
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
