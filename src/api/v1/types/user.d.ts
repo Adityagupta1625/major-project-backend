@@ -1,5 +1,5 @@
-import { Enum } from '../constants'
-import {Document} from 'mongoose'
+import { type Enum } from '../constants'
+import { type Document } from 'mongoose'
 
 export interface UserInterface extends Document {
   email: string

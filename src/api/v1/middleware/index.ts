@@ -1,4 +1,4 @@
-import { validateToken } from "./verifyToken";
-import { authorizeAdmin,authorizeHeads } from "./authorizeUser";
+import { validateToken } from './verifyToken'
+import { authorizeAdmin, authorizeHeads } from './authorizeUser'
 
-export{validateToken,authorizeAdmin,authorizeHeads}
+export { validateToken, authorizeAdmin, authorizeHeads }

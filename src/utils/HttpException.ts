@@ -1,7 +1,7 @@
 class HttpException extends Error {
   errorCode: number
 
-  constructor(
+  constructor (
     errorCode: number,
     public readonly message: string | any
   ) {

@@ -1,4 +1,4 @@
-import { BaseValidator } from "../../../utils"
+import { BaseValidator } from '../../../utils'
 
 const placementFormSchema = {
   type: 'object',
@@ -8,7 +8,7 @@ const placementFormSchema = {
     courses: {
       type: 'array',
       items: { type: 'string', enum: ['BTECH', 'MTECH', 'MBA', 'MSC'] },
-      default: [],
+      default: []
     },
     departments: {
       type: 'array',
@@ -25,18 +25,16 @@ const placementFormSchema = {
           'CE',
           'CH',
           'TT',
-          'BT',
-        ],
+          'BT'
+        ]
       },
-      default: [],
+      default: []
     },
-    deadline: { type: 'string', format: 'date-time' },
+    deadline: { type: 'string', format: 'date-time' }
   },
   required: ['title', 'deadline'],
-  additionalProperties: false,
+  additionalProperties: false
 }
 
 const placementFormValidator = new BaseValidator(placementFormSchema)
-export {
-    placementFormValidator
-}
+export { placementFormValidator }

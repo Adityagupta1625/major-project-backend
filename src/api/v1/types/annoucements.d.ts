@@ -1,7 +1,7 @@
-import {Document} from 'mongoose'
+import { type Document } from 'mongoose'
 
-export interface AnnouncementInterface extends Document{
-    title: string,
-    description: string,
-    doc: string | null
+export interface AnnouncementInterface extends Document {
+  title: string
+  description: string
+  doc: string | null
 }

@@ -4,7 +4,7 @@ export const ConnectToMongo = (): void => {
   mongoose.set('strictQuery', false)
   mongoose
     .connect(process.env.MONGO_URI ?? '', {
-      dbName: 'tpo',
+      dbName: 'tpo'
     })
     .then(() => {
       console.log('connected Succesfully!!')
@@ -12,6 +12,4 @@ export const ConnectToMongo = (): void => {
     .catch((err) => {
       console.log('Error in connecting', err)
     })
-
-    
 }

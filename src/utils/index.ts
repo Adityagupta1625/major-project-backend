@@ -10,5 +10,5 @@ export {
   type CRUDBaseInterface,
   HttpException,
   errorHandler,
-  BaseValidator,
+  BaseValidator
 }

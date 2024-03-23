@@ -1,13 +1,13 @@
-import { UserInterface } from "./user";
-import { UserProfileInterface } from "./userProfile";
-import { PlacementFormInterface } from "./placementForm";
-import { AnnouncementInterface } from "./annoucements";
-import { UpcomingCompaniesInterface } from "./upcomingCompanies";
+import { type UserInterface } from './user'
+import { type UserProfileInterface } from './userProfile'
+import { type PlacementFormInterface } from './placementForm'
+import { type AnnouncementInterface } from './annoucements'
+import { type UpcomingCompaniesInterface } from './upcomingCompanies'
 
-export{
-    UserInterface,
-    UserProfileInterface,
-    PlacementFormInterface,
-    AnnouncementInterface,
-    UpcomingCompaniesInterface
+export type {
+  UserInterface,
+  UserProfileInterface,
+  PlacementFormInterface,
+  AnnouncementInterface,
+  UpcomingCompaniesInterface
 }

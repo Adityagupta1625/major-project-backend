@@ -6,11 +6,11 @@ import { errorHandler } from './errorHandler'
 export abstract class BaseController<T extends Document> {
   private readonly CRUDService: CRUDBaseInterface<T>
 
-  constructor(CRUDService: CRUDBaseInterface<T>) {
+  constructor (CRUDService: CRUDBaseInterface<T>) {
     this.CRUDService = CRUDService
   }
 
-  public async addController(req: Request, res: Response): Promise<Response> {
+  public async addController (req: Request, res: Response): Promise<Response> {
     try {
       await this.CRUDService.add(req.body)
       return res.status(201).json({ message: 'Data added Successfully!!' })
@@ -19,7 +19,7 @@ export abstract class BaseController<T extends Document> {
     }
   }
 
-  public async getController(req: Request, res: Response): Promise<Response> {
+  public async getController (req: Request, res: Response): Promise<Response> {
     try {
       const data = await this.CRUDService.getAll(req.query)
       return res.status(200).json(data)
@@ -28,7 +28,7 @@ export abstract class BaseController<T extends Document> {
     }
   }
 
-  public async getOneController(
+  public async getOneController (
     req: Request,
     res: Response
   ): Promise<Response> {
@@ -40,7 +40,7 @@ export abstract class BaseController<T extends Document> {
     }
   }
 
-  public async getByIdController(
+  public async getByIdController (
     req: Request,
     res: Response
   ): Promise<Response> {
@@ -50,7 +50,7 @@ export abstract class BaseController<T extends Document> {
       }
 
       const data = await this.CRUDService.get({
-        id: req.params.id,
+        id: req.params.id
       })
       return res.status(200).json(data)
     } catch (e) {
@@ -58,7 +58,7 @@ export abstract class BaseController<T extends Document> {
     }
   }
 
-  public async updateController(
+  public async updateController (
     req: Request,
     res: Response
   ): Promise<Response> {
@@ -70,7 +70,7 @@ export abstract class BaseController<T extends Document> {
     }
   }
 
-  public async deleteController(
+  public async deleteController (
     req: Request,
     res: Response
   ): Promise<Response> {

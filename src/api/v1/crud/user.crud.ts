@@ -1,12 +1,12 @@
-import { CRUDBase } from "../../../utils";
-import { UserModel } from "../models";
-import { UserInterface } from "../types";
+import { CRUDBase } from '../../../utils'
+import { UserModel } from '../models'
+import { type UserInterface } from '../types'
 
 class UserCRUD extends CRUDBase<UserInterface> {
-  constructor() {
-    super(UserModel);
+  constructor () {
+    super(UserModel)
   }
 }
 
-const userCRUD = new UserCRUD();
-export default userCRUD;
+const userCRUD = new UserCRUD()
+export default userCRUD

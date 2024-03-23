@@ -14,7 +14,7 @@ upcomingCompaniesRouter.post(
 
 upcomingCompaniesRouter.get(
   '/',
-  
+
   upcomingCompaniesController.getController.bind(upcomingCompaniesController)
 )
 

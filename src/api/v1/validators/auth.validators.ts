@@ -1,13 +1,13 @@
-import { BaseValidator } from "../../../utils"
+import { BaseValidator } from '../../../utils'
 
 const authSchema = {
   type: 'object',
   properties: {
     email: { type: 'string', format: 'email' },
-    password: { type: 'string' },
+    password: { type: 'string' }
   },
   required: ['email', 'password'],
-  additionalProperties: false,
+  additionalProperties: false
 }
 
 const registerSchema = {
@@ -15,16 +15,13 @@ const registerSchema = {
   properties: {
     email: { type: 'string', format: 'email' },
     password: { type: 'string' },
-    role: { type: 'string', enum: ['Student', 'PR', 'TPO'] },
+    role: { type: 'string', enum: ['Student', 'PR', 'TPO'] }
   },
   required: ['email', 'password', 'role'],
-  additionalProperties: false,
+  additionalProperties: false
 }
 
-const authValidator=new BaseValidator(authSchema)
-const registerValidator=new BaseValidator(registerSchema)
+const authValidator = new BaseValidator(authSchema)
+const registerValidator = new BaseValidator(registerSchema)
 
-export {
-    authValidator,
-    registerValidator
-}
+export { authValidator, registerValidator }

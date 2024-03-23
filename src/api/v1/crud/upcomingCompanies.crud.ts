@@ -1,12 +1,12 @@
-import { CRUDBase } from "../../../utils";
-import { UpcomingCompaniesModel } from "../models";
-import { UpcomingCompaniesInterface } from "../types";
+import { CRUDBase } from '../../../utils'
+import { UpcomingCompaniesModel } from '../models'
+import { type UpcomingCompaniesInterface } from '../types'
 
 class UpcomingCompaniesCRUD extends CRUDBase<UpcomingCompaniesInterface> {
-  constructor() {
-    super(UpcomingCompaniesModel);
+  constructor () {
+    super(UpcomingCompaniesModel)
   }
 }
 
-const upcomingCompaniesCRUD = new UpcomingCompaniesCRUD();
-export default upcomingCompaniesCRUD;
+const upcomingCompaniesCRUD = new UpcomingCompaniesCRUD()
+export default upcomingCompaniesCRUD

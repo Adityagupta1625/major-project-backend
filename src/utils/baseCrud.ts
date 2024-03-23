@@ -10,15 +10,14 @@ export interface CRUDBaseInterface<T extends Document> {
 }
 
 export abstract class CRUDBase<T extends Document>
-  implements CRUDBaseInterface<T>
-{
+implements CRUDBaseInterface<T> {
   private readonly baseModel: Model<T>
 
-  constructor(baseModel: Model<T>) {
+  constructor (baseModel: Model<T>) {
     this.baseModel = baseModel
   }
 
-  public async add(data: Partial<T>): Promise<T> {
+  public async add (data: Partial<T>): Promise<T> {
     try {
       const resp = await this.baseModel.create(data)
       return resp
@@ -27,7 +26,7 @@ export abstract class CRUDBase<T extends Document>
     }
   }
 
-  public async getAll(query: any): Promise<T[]> {
+  public async getAll (query: any): Promise<T[]> {
     try {
       const resp = await this.baseModel.find(query)
       return resp
@@ -36,7 +35,7 @@ export abstract class CRUDBase<T extends Document>
     }
   }
 
-  public async get(query: any): Promise<T | null> {
+  public async get (query: any): Promise<T | null> {
     try {
       const data = await this.baseModel.findOne(query)
       return data
@@ -45,14 +44,14 @@ export abstract class CRUDBase<T extends Document>
     }
   }
 
-  public async update(id: string, data: Partial<T>): Promise<T> {
+  public async update (id: string, data: Partial<T>): Promise<T> {
     try {
       if (typeof id !== 'string') {
         throw new HttpException(400, 'Missing parameter')
       }
 
       const result = await this.baseModel.findByIdAndUpdate(id, data, {
-        new: true,
+        new: true
       })
 
       if (result === null) throw new HttpException(404, 'Resource Not Found!!')
@@ -63,7 +62,7 @@ export abstract class CRUDBase<T extends Document>
     }
   }
 
-  public async delete(id: string): Promise<void> {
+  public async delete (id: string): Promise<void> {
     try {
       if (typeof id !== 'string') {
         throw new HttpException(400, 'Missing parameter')

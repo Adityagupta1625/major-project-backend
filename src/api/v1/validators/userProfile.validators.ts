@@ -1,4 +1,4 @@
-import { BaseValidator } from "../../../utils"
+import { BaseValidator } from '../../../utils'
 
 const userProfileSchema = {
   type: 'object',
@@ -18,17 +18,15 @@ const userProfileSchema = {
         'CE',
         'CH',
         'TT',
-        'BT',
-      ],
+        'BT'
+      ]
     },
     batch: { type: 'string' },
-    course: { type: 'string', enum: ['BTECH', 'MTECH', 'MBA', 'MSC'] },
+    course: { type: 'string', enum: ['BTECH', 'MTECH', 'MBA', 'MSC'] }
   },
   required: ['userId', 'name', 'department', 'batch', 'course'],
-  additionalProperties: false,
+  additionalProperties: false
 }
 
-const userProfileValidator=new BaseValidator(userProfileSchema)
-export{
-    userProfileValidator
-}
+const userProfileValidator = new BaseValidator(userProfileSchema)
+export { userProfileValidator }

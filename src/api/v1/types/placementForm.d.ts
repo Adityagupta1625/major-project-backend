@@ -1,5 +1,5 @@
-import { Document,ObjectId } from 'mongoose'
-import { Enum } from '../constants'
+import { type Document } from 'mongoose'
+import { type Enum } from '../constants'
 
 export interface PlacementFormInterface extends Document {
   title: string

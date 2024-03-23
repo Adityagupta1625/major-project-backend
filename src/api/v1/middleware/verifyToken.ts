@@ -2,7 +2,7 @@ import { type NextFunction, type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { errorHandler } from '../../../utils'
 import { userCRUD } from '../crud'
-import { UserInterface } from '../types'
+import { type UserInterface } from '../types'
 
 export const validateToken = (
   req: Request,
@@ -26,7 +26,7 @@ export const validateToken = (
         } else {
           const id: string = decoded?.id
           const user: any = userCRUD.get({
-            _id: id,
+            _id: id
           })
 
           user
@@ -34,18 +34,22 @@ export const validateToken = (
               if (result === null) {
                 res.status(401).json({ message: 'Invalid Token' })
               } else {
-                req.query.userId=result._id
-                req.query.userRole=result.role
+                req.query.userId = result._id
+                req.query.userRole = result.role
                 next()
               }
             })
             .catch((e: any) => {
               errorHandler(e, res)
+                .then(() => {})
+                .catch(() => {})
             })
         }
       }
     )
   } catch (e) {
     errorHandler(e, res)
+      .then(() => {})
+      .catch(() => {})
   }
 }

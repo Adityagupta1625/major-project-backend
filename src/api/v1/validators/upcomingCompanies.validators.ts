@@ -1,17 +1,15 @@
-import { BaseValidator } from "../../../utils"
+import { BaseValidator } from '../../../utils'
 
 const upcomingCompaniesSchema = {
   type: 'object',
   properties: {
     name: { type: 'string' },
     description: { type: 'string' },
-    doc: { type: ['string', 'null'] },
+    doc: { type: ['string', 'null'] }
   },
   required: ['name', 'description'],
-  additionalProperties: false,
+  additionalProperties: false
 }
 
-const upcomingCompaniesValidator=new BaseValidator(upcomingCompaniesSchema)
-export{
-    upcomingCompaniesValidator
-}
+const upcomingCompaniesValidator = new BaseValidator(upcomingCompaniesSchema)
+export { upcomingCompaniesValidator }

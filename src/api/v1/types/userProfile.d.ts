@@ -1,11 +1,10 @@
-import { Document,ObjectId } from 'mongoose';
-import { Enum } from '../constants'; 
+import { type Document, type ObjectId } from 'mongoose'
+import { type Enum } from '../constants'
 
 export interface UserProfileInterface extends Document {
-  userId: ObjectId;
-  name: string;
-  department: Enum.Departments;
-  batch: string;
-  course: Enum.Courses;
+  userId: ObjectId
+  name: string
+  department: Enum.Departments
+  batch: string
+  course: Enum.Courses
 }
-
