@@ -1,7 +1,7 @@
-import { google } from "googleapis"
-
+import {auth} from "@googleapis/forms"
 
 export const googleAuth=()=>{
+  
   const SCOPES = [
     'https://www.googleapis.com/auth/forms',
     'https://www.googleapis.com/auth/drive',
@@ -10,7 +10,7 @@ export const googleAuth=()=>{
     'https://www.googleapis.com/auth/forms.body',
   ]
 
-  const auth = new google.auth.GoogleAuth({
+  const gAuth = new auth.GoogleAuth({
     credentials: {
       type: process.env.GOOGLE_FORM_TYPE,
       project_id: process.env.GOOGLE_FORM_PROJECT_ID,
@@ -26,7 +26,7 @@ export const googleAuth=()=>{
     scopes: SCOPES,
   })
 
-  return auth
+  return gAuth
 }
 
 export default googleAuth

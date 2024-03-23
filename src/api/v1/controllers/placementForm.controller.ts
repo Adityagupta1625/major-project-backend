@@ -2,7 +2,8 @@ import { BaseController, HttpException, errorHandler } from '../../../utils'
 import { placementFormCRUD } from '../crud'
 import { Request, Response } from 'express'
 import { PlacementFormInterface } from '../types'
-import { google } from 'googleapis'
+import { forms} from '@googleapis/forms'
+import {drive} from '@googleapis/drive'
 import {googleAuth} from '../utils'
 
 class PlacementFormController extends BaseController<PlacementFormInterface> {
@@ -14,12 +15,12 @@ class PlacementFormController extends BaseController<PlacementFormInterface> {
     try {
       const auth=googleAuth()
       
-      const form = google.forms({
+      const form = forms({
         version: 'v1',
         auth,
       })
 
-      const drive = google.drive({
+      const gdrive = drive({
         version: 'v3',
         auth,
       })
@@ -39,7 +40,7 @@ class PlacementFormController extends BaseController<PlacementFormInterface> {
       )
         throw new HttpException(500, 'Unable to create Form!!')
 
-      await drive.permissions.create({
+      await gdrive.permissions.create({
         requestBody: {
           role: 'writer',
           emailAddress: 'guptaaditya2512@gmail.com',
