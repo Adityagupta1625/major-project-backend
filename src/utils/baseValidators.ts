@@ -1,12 +1,12 @@
-import { plainToInstance } from 'class-transformer'
-import { validateOrReject } from 'class-validator'
+import ajv, { Schema } from 'ajv'
 import { type NextFunction, type Request, type Response } from 'express'
+import HttpException from './HttpException'
 
-export abstract class BaseValidator {
-  private readonly inputObject: any
+export class BaseValidator {
+  private readonly schemaObj: Schema
 
-  constructor(inputObject: any) {
-    this.inputObject = inputObject
+  constructor(schemaObj: Schema) {
+    this.schemaObj = schemaObj
   }
 
   public async validateInput(
@@ -15,13 +15,16 @@ export abstract class BaseValidator {
     next: NextFunction
   ): Promise<Response | any> {
     try {
-      const dtoInstance = plainToInstance(this.inputObject, req.body)
+      const Ajv=new ajv()
 
-      await validateOrReject(dtoInstance)
+      const validate=Ajv.compile(this.schemaObj)
+      const valid=validate(req.body.data)
+      if(valid) next()
 
-      next()
+      else throw new HttpException(400,validate.errors)
+
     } catch (e: any) {
-      return res.status(400).json({ message: e })
+      return res.status(e?.errorCode ?? 500).json({ message: e })
     }
   }
 }

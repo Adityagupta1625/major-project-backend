@@ -1,12 +1,14 @@
 import { upcomingCompaniesController } from '../controllers'
 import { Router } from 'express'
 import { authorizeAdmin } from '../middleware'
+import { upcomingCompaniesValidator } from '../validators'
 
 const upcomingCompaniesRouter = Router()
 
 upcomingCompaniesRouter.post(
   '/',
   authorizeAdmin,
+  upcomingCompaniesValidator.validateInput.bind(upcomingCompaniesValidator),
   upcomingCompaniesController.addController.bind(upcomingCompaniesController)
 )
 
@@ -26,6 +28,7 @@ upcomingCompaniesRouter.get(
 upcomingCompaniesRouter.put(
   '/:id',
   authorizeAdmin,
+  upcomingCompaniesValidator.validateInput.bind(upcomingCompaniesValidator),
   upcomingCompaniesController.updateController.bind(upcomingCompaniesController)
 )
 

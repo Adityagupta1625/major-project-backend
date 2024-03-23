@@ -1,17 +1,40 @@
-import { placementFormController } from "../controllers";
-import { Router } from "express";
-import { authorizeHeads } from "../middleware";
+import { placementFormController } from '../controllers'
+import { Router } from 'express'
+import { authorizeHeads } from '../middleware'
+import { placementFormValidator } from '../validators'
 
-const placementFormRouter=Router()
+const placementFormRouter = Router()
 
-placementFormRouter.post('/',authorizeHeads,placementFormController.addController.bind(placementFormController))
+placementFormRouter.post(
+  '/',
+  authorizeHeads,
+  placementFormValidator.validateInput.bind(placementFormValidator),
+  placementFormController.addController.bind(placementFormController)
+)
 
-placementFormRouter.get('/',authorizeHeads, placementFormController.getController.bind(placementFormController))
+placementFormRouter.get(
+  '/',
+  authorizeHeads,
+  placementFormController.getController.bind(placementFormController)
+)
 
-placementFormRouter.get('/:id',authorizeHeads,placementFormController.getByIdController.bind(placementFormController))
+placementFormRouter.get(
+  '/:id',
+  authorizeHeads,
+  placementFormController.getByIdController.bind(placementFormController)
+)
 
-placementFormRouter.put('/:id',authorizeHeads, placementFormController.updateController.bind(placementFormController))
+placementFormRouter.put(
+  '/:id',
+  authorizeHeads,
+  placementFormValidator.validateInput.bind(placementFormValidator),
+  placementFormController.updateController.bind(placementFormController)
+)
 
-placementFormRouter.delete('/:id',authorizeHeads,placementFormController.deleteController.bind(placementFormController))
+placementFormRouter.delete(
+  '/:id',
+  authorizeHeads,
+  placementFormController.deleteController.bind(placementFormController)
+)
 
 export default placementFormRouter

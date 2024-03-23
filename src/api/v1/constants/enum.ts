@@ -19,20 +19,6 @@ export enum Courses{
     MSC='M.SC'
 }
 
-export enum FormFieldType{
-    TEXT='text',
-    EMAIL='email',
-    NUMBER='number',
-    DATE='date',
-    RADIO='radio',
-    CHECKBOX='checkbox',
-    FILE='file',
-}
-
-export enum FormStatus{
-    OPEN='open',
-    CLOSED='close'
-}
 
 export enum Roles{
     STUDENT='Student',
