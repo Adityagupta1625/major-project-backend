@@ -15,7 +15,7 @@ class AuthController {
       const token = jwt.sign({ id: user._id }, process.env.SECRET ?? '')
 
       return res.status(200).json({
-        message: 'Login Successfully!!',
+        message: 'Registered Successfully!!',
         token,
         role: user.role
       })

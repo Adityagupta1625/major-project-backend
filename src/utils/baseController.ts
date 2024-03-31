@@ -4,7 +4,7 @@ import { type Document } from 'mongoose'
 import { errorHandler } from './errorHandler'
 
 export abstract class BaseController<T extends Document> {
-  private readonly CRUDService: CRUDBaseInterface<T>
+  protected readonly CRUDService: CRUDBaseInterface<T>
 
   constructor (CRUDService: CRUDBaseInterface<T>) {
     this.CRUDService = CRUDService

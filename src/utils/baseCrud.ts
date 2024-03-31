@@ -7,6 +7,7 @@ export interface CRUDBaseInterface<T extends Document> {
   get: (query: any) => Promise<T | null>
   update: (id: string, data: Partial<T>) => Promise<T>
   delete: (id: string) => Promise<void>
+  getById: (id: string) => Promise<T | null>
 }
 
 export abstract class CRUDBase<T extends Document>
@@ -69,6 +70,19 @@ implements CRUDBaseInterface<T> {
       }
 
       await this.baseModel.findByIdAndDelete(id)
+    } catch (e) {
+      throw new HttpException(e?.errorCode, e?.message)
+    }
+  }
+
+  public async getById (id: string): Promise<T | null> {
+    try {
+      if (typeof id !== 'string') {
+        throw new HttpException(400, 'Missing parameter')
+      }
+
+      const result = await this.baseModel.findById(id)
+      return result
     } catch (e) {
       throw new HttpException(e?.errorCode, e?.message)
     }

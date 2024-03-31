@@ -3,8 +3,8 @@ import { Router } from 'express'
 
 const userRouter = Router()
 
-userRouter.get('/:id', userController.getByIdController.bind(userController))
+userRouter.get('/', userController.getController.bind(userController))
 
-userRouter.put('/:id', userController.updateController.bind(userController))
+userRouter.put('/', userController.updateController.bind(userController))
 
 export default userRouter

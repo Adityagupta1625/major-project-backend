@@ -7,4 +7,5 @@ export interface UserProfileInterface extends Document {
   department: Enum.Departments
   batch: string
   course: Enum.Courses
+  rollNo: string
 }
