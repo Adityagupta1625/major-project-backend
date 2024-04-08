@@ -1,7 +1,7 @@
 import { type Document, type ObjectId } from 'mongoose'
 import { type Enum } from '../constants'
 
-export interface UserProfileInterface extends Document {
+export interface UserProfileDTO extends Document {
   userId: ObjectId
   name: string
   department: Enum.Departments

@@ -1,6 +1,6 @@
 import { type Document } from 'mongoose'
 
-export interface UpcomingCompaniesInterface extends Document {
+export interface UpcomingCompaniesDTO extends Document {
   name: string
   description: string
   doc: string | null

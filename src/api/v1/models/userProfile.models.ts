@@ -1,22 +1,19 @@
 import { Schema, model } from 'mongoose'
-import { type UserProfileInterface } from '../types'
+import { type UserProfileDTO } from '../types'
 import { Enum } from '../constants'
 
-const UserProfileSchema = new Schema<UserProfileInterface>(
+const UserProfileSchema = new Schema<UserProfileDTO>(
   {
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    name: { type: String, required: true },
-    rollNo: { type: String, required: true },
-    department: { type: String, enum: Enum.Departments, required: true },
-    batch: { type: String, required: true },
-    course: { type: String, enum: Enum.Courses, required: true }
+    name: { type: String, default: null },
+    rollNo: { type: String, default: null },
+    department: { type: String, enum: Enum.Departments, default: null },
+    batch: { type: String, default: null },
+    course: { type: String, enum: Enum.Courses, defaul: null }
   },
   { timestamps: true }
 )
 
-const UserProfileModel = model<UserProfileInterface>(
-  'UserProfile',
-  UserProfileSchema
-)
+const UserProfileModel = model<UserProfileDTO>('UserProfile', UserProfileSchema)
 
 export default UserProfileModel

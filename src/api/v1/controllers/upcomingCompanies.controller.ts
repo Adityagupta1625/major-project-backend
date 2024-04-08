@@ -1,8 +1,8 @@
 import { BaseController } from '../../../utils'
 import { upcomingCompaniesCRUD } from '../crud'
-import { type UpcomingCompaniesInterface } from '../types'
+import { type UpcomingCompaniesDTO } from '../types'
 
-class UpcomingCompaniesController extends BaseController<UpcomingCompaniesInterface> {
+class UpcomingCompaniesController extends BaseController<UpcomingCompaniesDTO> {
   constructor () {
     super(upcomingCompaniesCRUD)
   }

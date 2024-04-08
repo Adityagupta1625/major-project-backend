@@ -2,7 +2,7 @@ import { type NextFunction, type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { errorHandler } from '../../../utils'
 import { userCRUD } from '../crud'
-import { type UserInterface } from '../types'
+import { type UserDTO } from '../types'
 
 export const validateToken = (
   req: Request,
@@ -25,12 +25,12 @@ export const validateToken = (
           res.status(401).json({ message: 'Invalid Token' })
         } else {
           const id: string = decoded?.id
-          const user: any = userCRUD.get({
+          const user: Promise<UserDTO | null> = userCRUD.find({
             _id: id
           })
 
           user
-            .then((result: UserInterface | null) => {
+            .then((result: UserDTO | null) => {
               if (result === null) {
                 res.status(401).json({ message: 'Invalid Token' })
               } else {

@@ -1,6 +1,6 @@
 import { placementFormController } from '../controllers'
 import { Router } from 'express'
-import { authorizeHeads } from '../middleware'
+import { authorizeHeads, queryHandler } from '../middleware'
 import { placementFormValidator } from '../validators'
 
 const placementFormRouter = Router()
@@ -14,13 +14,13 @@ placementFormRouter.post(
 
 placementFormRouter.get(
   '/',
-  authorizeHeads,
-  placementFormController.getController.bind(placementFormController)
+  queryHandler,
+  placementFormController.getAllController.bind(placementFormController)
 )
 
 placementFormRouter.get(
   '/:id',
-  authorizeHeads,
+  queryHandler,
   placementFormController.getByIdController.bind(placementFormController)
 )
 

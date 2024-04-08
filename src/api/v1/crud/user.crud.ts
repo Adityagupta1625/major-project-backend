@@ -1,8 +1,8 @@
 import { CRUDBase } from '../../../utils'
 import { UserModel } from '../models'
-import { type UserInterface } from '../types'
+import { type UserDTO } from '../types'
 
-class UserCRUD extends CRUDBase<UserInterface> {
+class UserCRUD extends CRUDBase<UserDTO> {
   constructor () {
     super(UserModel)
   }

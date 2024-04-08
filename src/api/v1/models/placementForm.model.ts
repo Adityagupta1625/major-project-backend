@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose'
-import { type PlacementFormInterface } from '../types'
+import { type PlacementFormDTO } from '../types'
 import { Enum } from '../constants'
 
-const PlacementFormSchema = new Schema<PlacementFormInterface>(
+const PlacementFormSchema = new Schema<PlacementFormDTO>(
   {
     title: { type: String, required: true },
     formId: { type: String, required: true },
@@ -20,7 +20,7 @@ const PlacementFormSchema = new Schema<PlacementFormInterface>(
   { timestamps: true }
 )
 
-const PlacementFormModel = model<PlacementFormInterface>(
+const PlacementFormModel = model<PlacementFormDTO>(
   'PlacementForm',
   PlacementFormSchema
 )

@@ -1,9 +1,9 @@
 import { BaseController, HttpException, errorHandler } from '../../../utils'
 import { userCRUD } from '../crud'
-import { type UserInterface } from '../types'
+import { type UserDTO } from '../types'
 import { type Request, type Response } from 'express'
 
-class UserController extends BaseController<UserInterface> {
+class UserController extends BaseController<UserDTO> {
   constructor () {
     super(userCRUD)
   }

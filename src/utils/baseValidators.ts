@@ -19,7 +19,6 @@ export class BaseValidator {
       const ajv = new Ajv()
       addFormats(ajv, { mode: 'full' })
       const validate = ajv.compile(this.schemaObj)
-      console.log(req.body)
       const valid = validate(req.body)
       if (valid) next()
       else {
@@ -27,15 +26,19 @@ export class BaseValidator {
           throw new HttpException(400, 'Validation error')
         }
 
-        const errorMessage = validate.errors.map(error => {
-          return `${error.message}`
-        }).join(', ')
+        const errorMessage = validate.errors
+          .map((error) => {
+            return `${error.message}`
+          })
+          .join(', ')
 
         throw new HttpException(400, errorMessage)
       }
     } catch (e: any) {
       console.log(e)
-      return res.status(e?.errorCode ?? 500).json({ message: e?.message ?? e ?? 'Something Went Wrong!!' })
+      return res
+        .status(e?.errorCode ?? 500)
+        .json({ message: e?.message ?? e ?? 'Something Went Wrong!!' })
     }
   }
 }

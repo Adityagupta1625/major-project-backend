@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { type AnnouncementInterface } from '../types'
+import { type AnnouncementDTO } from '../types'
 
-const AnnouncementSchema = new Schema<AnnouncementInterface>(
+const AnnouncementSchema = new Schema<AnnouncementDTO>(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -10,7 +10,7 @@ const AnnouncementSchema = new Schema<AnnouncementInterface>(
   { timestamps: true }
 )
 
-const AnnouncementModel = model<AnnouncementInterface>(
+const AnnouncementModel = model<AnnouncementDTO>(
   'Announcement',
   AnnouncementSchema
 )

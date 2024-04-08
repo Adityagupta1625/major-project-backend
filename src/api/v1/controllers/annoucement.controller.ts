@@ -1,8 +1,8 @@
 import { BaseController } from '../../../utils'
 import { announcementCRUD } from '../crud'
-import { type AnnouncementInterface } from '../types'
+import { type AnnouncementDTO } from '../types'
 
-class AnnouncementController extends BaseController<AnnouncementInterface> {
+class AnnouncementController extends BaseController<AnnouncementDTO> {
   constructor () {
     super(announcementCRUD)
   }

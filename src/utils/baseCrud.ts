@@ -1,18 +1,18 @@
-import { type Document, type Model } from 'mongoose'
+import { type Document, type Model, type FilterQuery } from 'mongoose'
 import HttpException from './HttpException'
 
 export interface CRUDBaseInterface<T extends Document> {
   add: (data: Partial<T>) => Promise<T>
-  getAll: (query: any) => Promise<T[]>
-  get: (query: any) => Promise<T | null>
-  update: (id: string, data: Partial<T>) => Promise<T>
-  delete: (id: string) => Promise<void>
+  findAll: (query: FilterQuery<T>) => Promise<T[]>
+  find: (query: FilterQuery<T>) => Promise<T | null>
+  update: (query: FilterQuery<T>, data: Partial<T>) => Promise<T>
+  delete: (query: FilterQuery<T>) => Promise<void>
   getById: (id: string) => Promise<T | null>
 }
 
 export abstract class CRUDBase<T extends Document>
 implements CRUDBaseInterface<T> {
-  private readonly baseModel: Model<T>
+  protected readonly baseModel: Model<T>
 
   constructor (baseModel: Model<T>) {
     this.baseModel = baseModel
@@ -27,8 +27,12 @@ implements CRUDBaseInterface<T> {
     }
   }
 
-  public async getAll (query: any): Promise<T[]> {
+  public async findAll (query: FilterQuery<T>): Promise<T[]> {
     try {
+      if (query === undefined) {
+        throw new HttpException(400, 'Missing parameter')
+      }
+
       const resp = await this.baseModel.find(query)
       return resp
     } catch (e) {
@@ -36,8 +40,12 @@ implements CRUDBaseInterface<T> {
     }
   }
 
-  public async get (query: any): Promise<T | null> {
+  public async find (query: FilterQuery<T>): Promise<T | null> {
     try {
+      if (query === undefined) {
+        throw new HttpException(400, 'Missing parameter')
+      }
+
       const data = await this.baseModel.findOne(query)
       return data
     } catch (e) {
@@ -45,13 +53,13 @@ implements CRUDBaseInterface<T> {
     }
   }
 
-  public async update (id: string, data: Partial<T>): Promise<T> {
+  public async update (query: FilterQuery<T>, data: Partial<T>): Promise<T> {
     try {
-      if (typeof id !== 'string') {
+      if (query === undefined) {
         throw new HttpException(400, 'Missing parameter')
       }
 
-      const result = await this.baseModel.findByIdAndUpdate(id, data, {
+      const result = await this.baseModel.findOneAndUpdate(query, data, {
         new: true
       })
 
@@ -63,13 +71,13 @@ implements CRUDBaseInterface<T> {
     }
   }
 
-  public async delete (id: string): Promise<void> {
+  public async delete (query: FilterQuery<T>): Promise<void> {
     try {
-      if (typeof id !== 'string') {
+      if (query === undefined) {
         throw new HttpException(400, 'Missing parameter')
       }
 
-      await this.baseModel.findByIdAndDelete(id)
+      await this.baseModel.findOneAndDelete(query)
     } catch (e) {
       throw new HttpException(e?.errorCode, e?.message)
     }

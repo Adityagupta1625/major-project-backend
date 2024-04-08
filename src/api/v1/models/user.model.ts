@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose'
-import { type UserInterface } from '../types'
+import { type UserDTO } from '../types'
 import { Enum } from '../constants'
 
-const UserSchema = new Schema<UserInterface>(
+const UserSchema = new Schema<UserDTO>(
   {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -11,6 +11,6 @@ const UserSchema = new Schema<UserInterface>(
   { timestamps: true }
 )
 
-const UserModel = model<UserInterface>('User', UserSchema)
+const UserModel = model<UserDTO>('User', UserSchema)
 
 export default UserModel

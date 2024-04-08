@@ -1,8 +1,8 @@
 import { CRUDBase } from '../../../utils'
 import { UpcomingCompaniesModel } from '../models'
-import { type UpcomingCompaniesInterface } from '../types'
+import { type UpcomingCompaniesDTO } from '../types'
 
-class UpcomingCompaniesCRUD extends CRUDBase<UpcomingCompaniesInterface> {
+class UpcomingCompaniesCRUD extends CRUDBase<UpcomingCompaniesDTO> {
   constructor () {
     super(UpcomingCompaniesModel)
   }

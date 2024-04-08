@@ -7,7 +7,7 @@ const placementFormSchema = {
     formId: { type: 'string' },
     courses: {
       type: 'array',
-      items: { type: 'string', enum: ['BTECH', 'MTECH', 'MBA', 'MSC'] },
+      items: { type: 'string', enum: ['B.TECH', 'M.TECH', 'MBA', 'M.SC'] },
       default: []
     },
     departments: {

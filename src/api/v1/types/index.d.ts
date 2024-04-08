@@ -1,13 +1,13 @@
-import { type UserInterface } from './user'
-import { type UserProfileInterface } from './userProfile'
-import { type PlacementFormInterface } from './placementForm'
-import { type AnnouncementInterface } from './annoucements'
-import { type UpcomingCompaniesInterface } from './upcomingCompanies'
+import { type UserDTO } from './user'
+import { type UserProfileDTO } from './userProfile'
+import { type PlacementFormDTO } from './placementForm'
+import { type AnnouncementDTO } from './annoucements'
+import { type UpcomingCompaniesDTO } from './upcomingCompanies'
 
 export type {
-  UserInterface,
-  UserProfileInterface,
-  PlacementFormInterface,
-  AnnouncementInterface,
-  UpcomingCompaniesInterface
+  UserDTO,
+  UserProfileDTO,
+  PlacementFormDTO,
+  AnnouncementDTO,
+  UpcomingCompaniesDTO
 }

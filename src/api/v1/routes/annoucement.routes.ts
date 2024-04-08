@@ -1,6 +1,6 @@
 import { announcementController } from '../controllers'
 import { Router } from 'express'
-import { authorizeAdmin } from '../middleware'
+import { authorizeAdmin, queryHandler } from '../middleware'
 import { announcementValidator } from '../validators'
 
 const announcementRouter = Router()
@@ -8,13 +8,15 @@ const announcementRouter = Router()
 announcementRouter.post(
   '/',
   authorizeAdmin,
+  queryHandler,
   announcementValidator.validateInput.bind(announcementValidator),
   announcementController.addController.bind(announcementController)
 )
 
 announcementRouter.get(
   '/',
-  announcementController.getController.bind(announcementController)
+  queryHandler,
+  announcementController.getAllController.bind(announcementController)
 )
 
 announcementRouter.get(

@@ -1,8 +1,8 @@
 import { CRUDBase } from '../../../utils'
 import { AnnouncementModel } from '../models'
-import { type AnnouncementInterface } from '../types'
+import { type AnnouncementDTO } from '../types'
 
-class AnnouncementCRUD extends CRUDBase<AnnouncementInterface> {
+class AnnouncementCRUD extends CRUDBase<AnnouncementDTO> {
   constructor () {
     super(AnnouncementModel)
   }

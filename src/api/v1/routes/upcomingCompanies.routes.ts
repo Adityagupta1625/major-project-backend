@@ -1,6 +1,6 @@
 import { upcomingCompaniesController } from '../controllers'
 import { Router } from 'express'
-import { authorizeAdmin } from '../middleware'
+import { authorizeAdmin, queryHandler } from '../middleware'
 import { upcomingCompaniesValidator } from '../validators'
 
 const upcomingCompaniesRouter = Router()
@@ -14,12 +14,13 @@ upcomingCompaniesRouter.post(
 
 upcomingCompaniesRouter.get(
   '/',
-
-  upcomingCompaniesController.getController.bind(upcomingCompaniesController)
+  queryHandler,
+  upcomingCompaniesController.getAllController.bind(upcomingCompaniesController)
 )
 
 upcomingCompaniesRouter.get(
   '/:id',
+  queryHandler,
   upcomingCompaniesController.getByIdController.bind(
     upcomingCompaniesController
   )

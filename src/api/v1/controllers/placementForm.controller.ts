@@ -1,12 +1,12 @@
 import { BaseController, HttpException, errorHandler } from '../../../utils'
-import { placementFormCRUD } from '../crud'
+import { placementFormCRUD, userProfileCRUD } from '../crud'
 import { type Request, type Response } from 'express'
-import { type PlacementFormInterface } from '../types'
+import { type PlacementFormDTO } from '../types'
 import { forms } from '@googleapis/forms'
 import { drive } from '@googleapis/drive'
 import { googleAuth } from '../utils'
 
-class PlacementFormController extends BaseController<PlacementFormInterface> {
+class PlacementFormController extends BaseController<PlacementFormDTO> {
   constructor () {
     super(placementFormCRUD)
   }
@@ -58,6 +58,32 @@ class PlacementFormController extends BaseController<PlacementFormInterface> {
         message: 'Form created successfully',
         url: `https://docs.google.com/forms/d/${resp.data.formId}/edit`
       })
+    } catch (e) {
+      return await errorHandler(e, res)
+    }
+  }
+
+  public async getController (req: Request, res: Response): Promise<Response> {
+    try {
+      const userProfile = await userProfileCRUD.find({
+        userId: req.query.userId
+      })
+
+      if (userProfile === null) { throw new HttpException(404, 'User Profile Not Updated!!') }
+
+      const department = userProfile.department
+      const course = userProfile.course
+      const today = new Date()
+
+      if (department === null || course === null) { throw new HttpException(404, 'User Profile Not Updated!!') }
+
+      const data = await this.CRUDService.findAll({
+        departments: { $in: [department] },
+        courses: { $in: [course] },
+        deadline: { $gte: today }
+      })
+
+      return res.status(200).json(data)
     } catch (e) {
       return await errorHandler(e, res)
     }

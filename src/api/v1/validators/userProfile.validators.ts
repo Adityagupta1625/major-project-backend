@@ -3,7 +3,7 @@ import { BaseValidator } from '../../../utils'
 const userProfileSchema = {
   type: 'object',
   properties: {
-    userId: { type: 'string', format: 'object-id' },
+    userId: { type: 'string' },
     name: { type: 'string' },
     department: {
       type: 'string',
@@ -22,9 +22,10 @@ const userProfileSchema = {
       ]
     },
     batch: { type: 'string' },
-    course: { type: 'string', enum: ['BTECH', 'MTECH', 'MBA', 'MSC'] }
+    course: { type: 'string', enum: ['B.TECH', 'M.TECH', 'MBA', 'M.SC'] },
+    rollNo: { type: 'string' }
   },
-  required: ['userId', 'name', 'department', 'batch', 'course'],
+
   additionalProperties: false
 }
 

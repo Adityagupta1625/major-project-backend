@@ -1,7 +1,7 @@
 import { type Document } from 'mongoose'
 import { type Enum } from '../constants'
 
-export interface PlacementFormInterface extends Document {
+export interface PlacementFormDTO extends Document {
   title: string
   formId: string
   courses: Enum.Courses[]

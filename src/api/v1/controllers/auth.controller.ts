@@ -28,7 +28,7 @@ class AuthController {
     try {
       const { email, password } = req.body
 
-      const user = await userCRUD.get({ email })
+      const user = await userCRUD.find({ email })
       if (user === null) throw new HttpException(404, 'User Does not Exist')
 
       const isValid = compareSync(password, user.password)
@@ -51,7 +51,7 @@ class AuthController {
       const { email, password } = req.body
       const hashedPassword = bcrypt.hashSync(password, 10)
 
-      const user = await userCRUD.get({ email })
+      const user = await userCRUD.find({ email })
       if (user === null) throw new HttpException(404, 'User Does not Exist')
 
       await userCRUD.update(user._id.toString(), { password: hashedPassword })
