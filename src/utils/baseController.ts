@@ -65,7 +65,9 @@ export abstract class BaseController<T extends Document> {
     res: Response
   ): Promise<Response> {
     try {
-      if (typeof req.params.id !== 'string') { throw new HttpException(400, 'Invalid ID') }
+      if (typeof req.params.id !== 'string') {
+        throw new HttpException(400, 'Invalid ID')
+      }
 
       const data = await this.CRUDService.update(
         { _id: new Schema.Types.ObjectId(req.params.id) },
@@ -82,7 +84,9 @@ export abstract class BaseController<T extends Document> {
     res: Response
   ): Promise<Response> {
     try {
-      if (typeof req.params.id !== 'string') { throw new HttpException(400, 'Invalid ID') }
+      if (typeof req.params.id !== 'string') {
+        throw new HttpException(400, 'Invalid ID')
+      }
 
       await this.CRUDService.delete({
         _id: new Schema.Types.ObjectId(req.params.id)

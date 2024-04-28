@@ -1,5 +1,5 @@
 import { type Document } from 'mongoose'
-import { Enum } from '../constants'
+import { type Enum } from '../constants'
 
 export interface UpcomingCompaniesDTO extends Document {
   name: string

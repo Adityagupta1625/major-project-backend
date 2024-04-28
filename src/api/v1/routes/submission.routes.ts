@@ -1,7 +1,6 @@
 import { submissionController } from '../controllers'
 import { Router } from 'express'
-import { submissionValidator } from '../validators'
-import { commentValidator } from '../validators/submission.validators'
+import { submissionValidator, commentValidator } from '../validators'
 
 const submissionRouter = Router()
 
@@ -17,7 +16,10 @@ submissionRouter.put(
   submissionController.updateController.bind(submissionController)
 )
 
-submissionRouter.get('/user', submissionController.getByUserId.bind(submissionController))
+submissionRouter.get(
+  '/user',
+  submissionController.getByUserId.bind(submissionController)
+)
 
 submissionRouter.get(
   '/company',

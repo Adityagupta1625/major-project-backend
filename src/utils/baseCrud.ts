@@ -1,4 +1,9 @@
-import { type Document, type Model, type FilterQuery,type UpdateQuery } from 'mongoose'
+import {
+  type Document,
+  type Model,
+  type FilterQuery,
+  type UpdateQuery
+} from 'mongoose'
 import HttpException from './HttpException'
 
 export interface CRUDBaseInterface<T extends Document> {

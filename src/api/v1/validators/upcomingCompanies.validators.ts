@@ -8,7 +8,7 @@ const upcomingCompaniesSchema = {
     doc: { type: ['string', 'null'] },
     courses: {
       type: 'array',
-      items: { type: 'string', enum: ['B.TECH', 'M.TECH', 'MBA', 'M.SC'] }, 
+      items: { type: 'string', enum: ['B.TECH', 'M.TECH', 'MBA', 'M.SC'] }
     },
     departments: {
       type: 'array',
@@ -26,13 +26,13 @@ const upcomingCompaniesSchema = {
           'CH',
           'TT',
           'BT'
-        ],
-      },
+        ]
+      }
     },
-    deadline: { type: 'string', format: 'date-time' },
+    deadline: { type: 'string', format: 'date-time' }
   },
   required: ['name', 'description', 'deadline'],
-  additionalProperties: false,
+  additionalProperties: false
 }
 
 const upcomingCompaniesValidator = new BaseValidator(upcomingCompaniesSchema)

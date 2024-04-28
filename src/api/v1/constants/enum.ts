@@ -25,8 +25,8 @@ export enum Roles {
   TPO = 'TPO',
 }
 
-export enum FormStatus{
-  Accepted='Accepted',
-  Rejected='Rejected',
-  Pending='Pending',
+export enum FormStatus {
+  Accepted = 'Accepted',
+  Rejected = 'Rejected',
+  Pending = 'Pending',
 }
