@@ -1,11 +1,11 @@
-import { type Document, type Model, type FilterQuery } from 'mongoose'
+import { type Document, type Model, type FilterQuery,type UpdateQuery } from 'mongoose'
 import HttpException from './HttpException'
 
 export interface CRUDBaseInterface<T extends Document> {
   add: (data: Partial<T>) => Promise<T>
   findAll: (query: FilterQuery<T>) => Promise<T[]>
   find: (query: FilterQuery<T>) => Promise<T | null>
-  update: (query: FilterQuery<T>, data: Partial<T>) => Promise<T>
+  update: (query: FilterQuery<T>, data: UpdateQuery<T>) => Promise<T>
   delete: (query: FilterQuery<T>) => Promise<void>
   getById: (id: string) => Promise<T | null>
 }
@@ -53,7 +53,7 @@ implements CRUDBaseInterface<T> {
     }
   }
 
-  public async update (query: FilterQuery<T>, data: Partial<T>): Promise<T> {
+  public async update (query: FilterQuery<T>, data: UpdateQuery<T>): Promise<T> {
     try {
       if (query === undefined) {
         throw new HttpException(400, 'Missing parameter')
