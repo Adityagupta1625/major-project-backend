@@ -8,4 +8,10 @@ export interface UserProfileDTO extends Document {
   batch: string
   course: Enum.Courses
   rollNo: string
+  resume: string
+  marks10: number
+  marks12: number
+  cgpa: number
+  mobileNo: string
+  personalEmail: string
 }
