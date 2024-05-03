@@ -30,3 +30,16 @@ export enum FormStatus {
   Rejected = 'Rejected',
   Pending = 'Pending',
 }
+
+export enum OfferCategory{
+  Dream='Dream',
+  SuperDream='Super Dream',
+  UnderDream='Below Dream'
+}
+
+export enum OfferType{
+  Internship6M='6 Months Internship',
+  Internship2M='2 Months Internship',
+  FullTime='Full Time',
+  PPO='PPO'
+}

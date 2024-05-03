@@ -19,6 +19,13 @@ upcomingCompaniesRouter.get(
 )
 
 upcomingCompaniesRouter.get(
+  '/apply',
+  upcomingCompaniesController.getCompaniesToApply.bind(
+    upcomingCompaniesController
+  )
+)
+
+upcomingCompaniesRouter.get(
   '/:id',
   queryHandler,
   upcomingCompaniesController.getByIdController.bind(

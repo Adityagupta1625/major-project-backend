@@ -29,9 +29,16 @@ const upcomingCompaniesSchema = {
         ]
       }
     },
-    deadline: { type: 'string', format: 'date-time' }
+    deadline: { type: 'string', format: 'date-time' },
+    batch: {type: 'string'},
+    category: {type: 'string',enum: ['Dream','Super Dream','Below Dream']},
+    offer: {
+      type: 'string',
+      enum: ['6 Months Internship','2 Months Internship','Full Time','PPO']
+    },
+    ctc: {type: 'string'}
   },
-  required: ['name', 'description', 'deadline'],
+  required: ['name', 'description', 'deadline','batch','offer','category','ctc'],
   additionalProperties: false
 }
 

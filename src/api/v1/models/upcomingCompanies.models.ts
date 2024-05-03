@@ -15,7 +15,11 @@ const UpcomingCompaniesSchema = new Schema<UpcomingCompaniesDTO>(
       type: [{ type: String, enum: Enum.Departments }],
       default: []
     },
-    deadline: { type: Date, required: true }
+    deadline: { type: Date, required: true },
+    category: {type: String, enum: Enum.OfferCategory, required: true},
+    offer: {type: String,enum: Enum.OfferType,required: true},
+    batch: {type: String,required: true},
+    ctc: {type: String,required: true}
   },
   { timestamps: true }
 )

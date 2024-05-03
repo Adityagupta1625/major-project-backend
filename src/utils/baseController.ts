@@ -70,7 +70,7 @@ export abstract class BaseController<T extends Document> {
       }
 
       const data = await this.CRUDService.update(
-        { _id: new Schema.Types.ObjectId(req.params.id) },
+        { _id: req.params.id },
         req.body
       )
       return res.status(200).json(data)

@@ -7,11 +7,16 @@ const SubmissionsSchema = new Schema<SubmissionsDTO>(
     companyId: {
       type: Schema.Types.ObjectId,
       ref: 'upcomingcompanies',
-      required: true
+      required: true,
     },
     userId: { type: Schema.Types.ObjectId, required: true },
-    status: { type: String, required: true, enum: Enum.FormStatus },
-    comments: { type: [String], required: false, default: [] }
+    status: {
+      type: String,
+      required: false,
+      enum: Enum.FormStatus,
+      default: Enum.FormStatus.Pending,
+    },
+    comments: { type: [String], required: false, default: [] },
   },
   { timestamps: true }
 )

@@ -10,12 +10,13 @@ const UserProfileSchema = new Schema<UserProfileDTO>(
     department: { type: String, enum: Enum.Departments, default: null },
     batch: { type: String, default: null },
     course: { type: String, enum: Enum.Courses, default: null },
-    resume: { type: String },
-    marks10: { type: Number },
-    marks12: { type: Number },
-    cgpa: { type: Number },
-    mobileNo: { type: String },
-    personalEmail: { type: String }
+    resume: { type: String, default: null },
+    marks10: { type: Number, default: null },
+    marks12: { type: Number, default: null },
+    cgpa: { type: Number, default: null },
+    mobileNo: { type: String, default: null },
+    personalEmail: { type: String, default: null },
+    officialEmail: { type: String, default: null },
   },
   { timestamps: true }
 )

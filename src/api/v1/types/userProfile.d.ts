@@ -14,4 +14,5 @@ export interface UserProfileDTO extends Document {
   cgpa: number
   mobileNo: string
   personalEmail: string
+  officialEmail: string
 }

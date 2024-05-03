@@ -8,4 +8,8 @@ export interface UpcomingCompaniesDTO extends Document {
   courses: Enum.Courses[]
   departments: Enum.Departments[]
   deadline: Date
+  ctc: string
+  category: Enum.OfferCategory
+  batch: string
+  offer: Enum.OfferType
 }
