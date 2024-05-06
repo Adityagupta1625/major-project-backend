@@ -11,9 +11,7 @@ class UpcomingCompaniesController extends BaseController<UpcomingCompaniesDTO> {
 
   public async getCompaniesToApply(req: Request,res: Response): Promise<Response>{
     try{
-      let userId: string | ObjectId= req.query.userId as string
-      userId=new mongoose.Schema.Types.ObjectId(userId);
-
+      let userId: string= req.query.userId as string
       const data=await upcomingCompaniesCRUD.getCompaniesToApply(userId)
       return res.status(200).json(data)
     }

@@ -17,10 +17,10 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
       if (!isValidObjectId(userId) || !isValidObjectId(companyId))
         throw new HttpException(400, 'Invalid data')
 
-      const userProfile = await userProfileCRUD.find({userId: userId})
+      const userProfile = await userProfileCRUD.find({ userId: userId })
 
-      if(userProfile===null)
-        throw new HttpException(409,'Please Fill Complete Details')
+      if (userProfile === null)
+        throw new HttpException(409, 'Please Fill Complete Details')
 
       const isNull = Object.values(userProfile).some((value) => value === null)
 
@@ -34,7 +34,7 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
 
       return res.status(201).json({ message: 'Submitted Successfully' })
     } catch (e) {
-      return await errorHandler(e,res)
+      return await errorHandler(e, res)
     }
   }
 
@@ -48,10 +48,20 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
       }
 
       const data = await submissionsCRUD.getAppliedCompaniesByUser(
-        new mongoose.Schema.Types.ObjectId(req.query.userId as string)
+        req.query.userId as string
       )
 
-      return res.status(200).json(data)
+      const resp: any=[]
+      data.forEach((value)=>{
+        resp.push({
+          companyName: value.companyDetails.name,
+          category: value.companyDetails.category,
+          ctc: value.companyDetails.ctc,
+          status: value.status
+        })
+      })
+
+      return res.status(200).json(resp)
     } catch (e) {
       return await errorHandler(e, res)
     }
@@ -67,22 +77,41 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
       }
 
       const data = await submissionsCRUD.getSubmissionDetailsByCompanyId(
-        new mongoose.Schema.Types.ObjectId(req.query.companyId as string)
+        req.query.companyId as string
       )
 
-      return res.status(200).json(data)
+      const resp: any = []
+      data.forEach((value) => {
+        resp.push({
+          _id: value._id,
+          name: value.userProfile.name,
+          department: value.userProfile.department,
+          course: value.userProfile.course,
+          personalEmail: value.userProfile.personalEmail,
+          officialEmail: value.userProfile.officialEmail,
+          batch: value.userProfile.batch,
+          marks10: value.userProfile.marks10,
+          marks12: value.userProfile.marks12,
+          cgpa: value.userProfile.cgpa,
+          mobileNo: value.userProfile.mobileNo,
+          resume: value.userProfile.resume,
+          rollNo: value.userProfile.rollNo,
+          status: value.status,
+        })
+      })
+
+      return res.status(200).json(resp)
     } catch (e) {
       return await errorHandler(e, res)
     }
   }
 
-  public async getAllSubmissionsByCompany(req: Request,res: Response){
-    try{
-      const data=await submissionsCRUD.getAllSubmissionsByCompany()
+  public async getAllSubmissionsByCompany(req: Request, res: Response) {
+    try {
+      const data = await submissionsCRUD.getAllSubmissionsByCompany()
       return res.status(200).json(data)
-    }
-    catch(e){
-      return await errorHandler(e,res)
+    } catch (e) {
+      return await errorHandler(e, res)
     }
   }
 

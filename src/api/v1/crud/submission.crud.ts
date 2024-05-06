@@ -1,7 +1,7 @@
 import { CRUDBase, HttpException } from '../../../utils'
 import { SubmissionsModel } from '../models'
 import { SubmissionDetailsWithCompany, type SubmissionsDTO } from '../types'
-import { ObjectId } from 'mongoose'
+import { ObjectId,Types } from 'mongoose'
 import { SubmissionDetailsWithUser,SubmissionDetailsByCompany } from '../types'
 
 class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
@@ -10,29 +10,31 @@ class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
   }
 
   public async getSubmissionDetailsByCompanyId(
-    companyId: ObjectId
-  ): Promise<SubmissionDetailsWithCompany[]> {
+    companyId: string
+  ): Promise<SubmissionDetailsWithUser[]> {
     try {
+      
       const data = await this.baseModel.aggregate([
         {
           $match: {
-            companyId: companyId,
+            companyId: new Types.ObjectId(companyId),
           },
         },
         {
           $lookup: {
-            from: 'userprofile',
+            from: 'userprofiles',
             localField: 'userId',
             foreignField: 'userId',
-            as: 'userprofile',
+            as: 'userProfile',
           },
         },
         {
-          $unwind: '$userprofile',
+          $unwind: '$userProfile',
         },
         {
           $project: {
-            userprofile: 1,
+            _id: 1,
+            userProfile: 1,
             status: 1,
             comments: 1,
           },
@@ -46,13 +48,13 @@ class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
   }
 
   public async getAppliedCompaniesByUser(
-    userId: ObjectId
-  ): Promise<SubmissionDetailsWithUser[]> {
+    userId: string
+  ): Promise<SubmissionDetailsWithCompany[]> {
     try {
       const data = await this.baseModel.aggregate([
         {
           $match: {
-            userId: userId,
+            userId: new Types.ObjectId(userId),
           },
         },
         {
@@ -104,6 +106,7 @@ class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
         },
         {
           $project: {
+            companyId: '$companyDetails._id',
             companyName: '$companyDetails.name',
             deadline: '$companyDetails.deadline',
             submissions: 1

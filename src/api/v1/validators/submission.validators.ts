@@ -9,6 +9,15 @@ const submissionSchema = {
   required: ['companyId'],
 }
 
+const updateSubmissionSchema={
+  type: 'object',
+  properties:{
+    status: {type:'string'}
+  },
+  additionalProperties: false,
+  required: ['status']
+}
+
 const commentSchema = {
   type: 'object',
   properties: {
@@ -20,6 +29,7 @@ const commentSchema = {
 }
 
 const submissionValidator = new BaseValidator(submissionSchema)
+const updateSubmissionValidator=new BaseValidator(updateSubmissionSchema)
 const commentValidator = new BaseValidator(commentSchema)
 
-export { submissionValidator, commentValidator }
+export { submissionValidator, commentValidator,updateSubmissionValidator }

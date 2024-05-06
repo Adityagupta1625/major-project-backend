@@ -14,6 +14,6 @@ apiRouter.use('/announcements', validateToken, announcementRouter)
 apiRouter.use('/upcoming-companies', validateToken, upcomingCompaniesRouter)
 apiRouter.use('/user', validateToken, userRouter)
 apiRouter.use('/user-profile', validateToken, userProfileRouter)
-apiRouter.use('/submission', validateToken, submissionRouter)
+apiRouter.use('/submission',validateToken, submissionRouter)
 
 export default apiRouter

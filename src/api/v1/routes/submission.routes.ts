@@ -1,6 +1,6 @@
 import { submissionController } from '../controllers'
 import { Router } from 'express'
-import { submissionValidator, commentValidator } from '../validators'
+import { submissionValidator, commentValidator,updateSubmissionValidator } from '../validators'
 
 const submissionRouter = Router()
 
@@ -10,16 +10,18 @@ submissionRouter.post(
   submissionController.addController.bind(submissionController)
 )
 
+submissionRouter.put(
+  '/:id',
+  updateSubmissionValidator.validateInput.bind(updateSubmissionValidator),
+  submissionController.updateController.bind(submissionController)
+)
+
+
 submissionRouter.get(
   '/',
   submissionController.getAllSubmissionsByCompany.bind(submissionController)
 )
 
-submissionRouter.put(
-  '/:id',
-  submissionValidator.validateInput.bind(submissionValidator),
-  submissionController.updateController.bind(submissionController)
-)
 
 submissionRouter.get(
   '/user',
@@ -36,5 +38,7 @@ submissionRouter.post(
   commentValidator.validateInput.bind(commentValidator),
   submissionController.addCommentController.bind(submissionController)
 )
+
+
 
 export default submissionRouter

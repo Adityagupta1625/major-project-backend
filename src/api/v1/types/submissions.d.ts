@@ -14,6 +14,7 @@ export type SubmissionDetailsWithUser={
   userProfile: UserProfileDTO
   status: Enum.FormStatus
   comments: string[]
+  _id: string
 }
 
 export type SubmissionDetailsWithCompany={
@@ -26,4 +27,5 @@ export type SubmissionDetailsByCompany={
   companyName: string
   submissions: number
   deadline: string
+  companyId: string
 }

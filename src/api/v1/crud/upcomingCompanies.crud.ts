@@ -1,7 +1,7 @@
 import { CRUDBase, HttpException } from '../../../utils'
 import { UpcomingCompaniesModel } from '../models'
 import { type UpcomingCompaniesDTO } from '../types'
-import { ObjectId } from 'mongoose'
+import { Types } from 'mongoose'
 
 class UpcomingCompaniesCRUD extends CRUDBase<UpcomingCompaniesDTO> {
   constructor() {
@@ -9,7 +9,7 @@ class UpcomingCompaniesCRUD extends CRUDBase<UpcomingCompaniesDTO> {
   }
 
   public async getCompaniesToApply(
-    userId: ObjectId
+    userId: string
   ): Promise<UpcomingCompaniesDTO[]> {
     try {
       const data = await this.baseModel.aggregate([
@@ -19,19 +19,48 @@ class UpcomingCompaniesCRUD extends CRUDBase<UpcomingCompaniesDTO> {
             localField: '_id',
             foreignField: 'companyId',
             as: 'submissionDetails',
-          },
-        },
-        {
-          $match: {
-            $or: [
-              { $submissionsDetails: { $exist: false } },
-              { '$submissionDetails.userId': { $ne: userId } },
+            pipeline: [
+              {
+                $group: {
+                  _id: '$companyId',
+                  user: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $eq: ['$userId', new Types.ObjectId(userId)],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                },
+              },
+              {
+                $project: {
+                  user: 1,
+                },
+              },
             ],
           },
         },
+        
         {
-          $project: {
-            submissionDetails: 0,
+          $match: {
+            $or:[
+              {
+                'submissionDetails':{
+                  $size: 0
+                }
+              },
+              {
+                'submissionDetails[0].user': {
+                  $eq: 0,
+                },
+              },
+              
+            ]
+            
           },
         },
       ])
