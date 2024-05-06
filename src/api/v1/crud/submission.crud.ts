@@ -81,7 +81,7 @@ class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
     }
   }
 
-  public async getAllSubmissions(): Promise<SubmissionDetailsByCompany[]> {
+  public async getAllSubmissionsByCompany(): Promise<SubmissionDetailsByCompany[]> {
     try {
       const data = await this.baseModel.aggregate([
         {

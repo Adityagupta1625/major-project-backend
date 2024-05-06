@@ -10,6 +10,11 @@ submissionRouter.post(
   submissionController.addController.bind(submissionController)
 )
 
+submissionRouter.get(
+  '/',
+  submissionController.getAllSubmissionsByCompany.bind(submissionController)
+)
+
 submissionRouter.put(
   '/:id',
   submissionValidator.validateInput.bind(submissionValidator),

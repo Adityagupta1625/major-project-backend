@@ -76,6 +76,16 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
     }
   }
 
+  public async getAllSubmissionsByCompany(req: Request,res: Response){
+    try{
+      const data=await submissionsCRUD.getAllSubmissionsByCompany()
+      return res.status(200).json(data)
+    }
+    catch(e){
+      return await errorHandler(e,res)
+    }
+  }
+
   public async addCommentController(
     req: Request,
     res: Response
