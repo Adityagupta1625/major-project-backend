@@ -1,3 +1,5 @@
+import { ParamsDictionary } from 'express-serve-static-core'
+import { ParsedQs } from 'qs'
 import { BaseController, errorHandler } from '../../../utils'
 import { userProfileCRUD } from '../crud'
 import { type UserProfileDTO } from '../types'
@@ -21,6 +23,20 @@ class UserProfileController extends BaseController<UserProfileDTO> {
       return await errorHandler(e, res)
     }
   }
+  public async updateController(req: Request, res: Response): Promise<Response> {
+      try{
+        
+        if(req.body?.userId===undefined){
+          req.body={...req.body,userId: req.query.userId}
+        }
+        const data=await this.CRUDService.update({},req.body)
+        return res.status(200).json(data)
+      }
+      catch(e){
+        return await errorHandler(e, res)
+      }
+  }
+
 }
 
 const userProfileController = new UserProfileController()

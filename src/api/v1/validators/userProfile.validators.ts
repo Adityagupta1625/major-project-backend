@@ -3,10 +3,11 @@ import { BaseValidator } from '../../../utils'
 const userProfileSchema = {
   type: 'object',
   properties: {
-    userId: { type: 'string' },
-    name: { type: 'string' },
+   
+    name: { type: ['string', 'null'] },
+    rollNo: { type: ['string', 'null'] },
     department: {
-      type: 'string',
+      type: ['string', 'null'],
       enum: [
         'CSE',
         'ECE',
@@ -18,15 +19,38 @@ const userProfileSchema = {
         'CE',
         'CH',
         'TT',
-        'BT'
-      ]
+        'BT',
+      ],
     },
-    batch: { type: 'string' },
-    course: { type: 'string', enum: ['B.TECH', 'M.TECH', 'MBA', 'M.SC'] },
-    rollNo: { type: 'string' }
+    batch: { type: ['string', 'null'] },
+    course: {
+      type: ['string', 'null'],
+      enum: ['B.TECH', 'M.TECH', 'MBA', 'M.SC'],
+    },
+    resume: { type: ['string', 'null'] },
+    marks10: { type: ['number', 'null'] },
+    marks12: { type: ['number', 'null'] },
+    cgpa: { type: ['number', 'null'] },
+    mobileNo: { type: ['string', 'null'] },
+    personalEmail: { type: ['string', 'null'] },
+    officialEmail: { type: ['string', 'null'] },
+    userId: {type: 'string'}
   },
-
-  additionalProperties: false
+  required: [
+    'name',
+    'rollNo',
+    'department',
+    'batch',
+    'course',
+    'resume',
+    'marks10',
+    'marks12',
+    'cgpa',
+    'mobileNo',
+    'personalEmail',
+    'officialEmail',
+  ],
+  additionalProperties: false,
 }
 
 const userProfileValidator = new BaseValidator(userProfileSchema)

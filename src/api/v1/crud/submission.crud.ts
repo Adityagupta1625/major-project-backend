@@ -1,8 +1,8 @@
 import { CRUDBase, HttpException } from '../../../utils'
 import { SubmissionsModel } from '../models'
-import { type SubmissionsDTO } from '../types'
+import { SubmissionDetailsWithCompany, type SubmissionsDTO } from '../types'
 import { ObjectId } from 'mongoose'
-import { SubmissionDetailsWithUser } from '../types'
+import { SubmissionDetailsWithUser,SubmissionDetailsByCompany } from '../types'
 
 class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
   constructor() {
@@ -11,7 +11,7 @@ class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
 
   public async getSubmissionDetailsByCompanyId(
     companyId: ObjectId
-  ): Promise<SubmissionDetailsWithUser[]> {
+  ): Promise<SubmissionDetailsWithCompany[]> {
     try {
       const data = await this.baseModel.aggregate([
         {
@@ -80,6 +80,43 @@ class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
       throw new HttpException(e?.errorCode, e?.message)
     }
   }
+
+  public async getAllSubmissions(): Promise<SubmissionDetailsByCompany[]> {
+    try {
+      const data = await this.baseModel.aggregate([
+        {
+          $group:{
+            _id: '$companyId',
+            companyId: { $first: '$companyId' },
+            submissions: {$sum: 1},
+          }
+        },
+        {
+          $lookup: {
+            from: 'upcomingcompanies',
+            localField: 'companyId',
+            foreignField: '_id',
+            as: 'companyDetails',
+          },
+        },
+        {
+          $unwind: '$companyDetails',
+        },
+        {
+          $project: {
+            companyName: '$companyDetails.name',
+            deadline: '$companyDetails.deadline',
+            submissions: 1
+          },
+        },
+      ])
+
+      return data
+    } catch (e) {
+      throw new HttpException(e?.errorCode, e?.message)
+    }
+  }
+
 }
 
 const submissionsCRUD = new SubmissionsCRUD()

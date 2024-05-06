@@ -17,10 +17,10 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
       if (!isValidObjectId(userId) || !isValidObjectId(companyId))
         throw new HttpException(400, 'Invalid data')
 
-      userId = new mongoose.Schema.Types.ObjectId(userId)
-      companyId = new mongoose.Schema.Types.ObjectId(companyId)
+      const userProfile = await userProfileCRUD.find({userId: userId})
 
-      const userProfile = await userProfileCRUD.getUserDetails(userId)
+      if(userProfile===null)
+        throw new HttpException(409,'Please Fill Complete Details')
 
       const isNull = Object.values(userProfile).some((value) => value === null)
 
@@ -34,7 +34,7 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
 
       return res.status(201).json({ message: 'Submitted Successfully' })
     } catch (e) {
-      return await errorHandler(res, e)
+      return await errorHandler(e,res)
     }
   }
 
