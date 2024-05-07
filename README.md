@@ -42,17 +42,6 @@ Ensure you have the following installed on your machine:
     PORT=8000  
     MONGO_URI=mongodb://localhost:27017/your-database 
     SECRET=your-secret-key 
-    GOOGLE_FORM_TYPE=service_account  
-    GOOGLE_FORM_PROJECT_ID=Project ID associated with your Google form
-    GOOGLE_FORM_PRIVATE_KEY_ID= ID for the private key
-    GOOGLE_FORM_PRIVATE_KEY=your-google-account private key
-    GOOGLE_FORM_CLIENT_EMAIL=Email associated with your Google service account
-    GOOGLE_FORM_CLIENT_ID= Client ID of your Google service account
-    GOOGLE_FORM_AUTH_URI= URI for Google form authentication
-    GOOGLE_FORM_TOKEN_URI=Token URI for Google form authentication
-    GOOGLE_FORM_AUTH_PROVIDER_X509_CERT_URL=X.509 certificate URL for Google form authentication
-    GOOGLE_FORM_CLIENT_X509_CERT_URL= X.509 certificate URL for Google service account
-    GOOGLE_FORM_UNIVERSE_DOMAIN=googleapis.com
     NODE_ENV=development
     ```
 
