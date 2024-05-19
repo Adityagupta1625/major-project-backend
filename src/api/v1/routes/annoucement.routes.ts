@@ -16,7 +16,7 @@ announcementRouter.post(
 announcementRouter.get(
   '/',
   queryHandler,
-  announcementController.getAllController.bind(announcementController)
+  announcementController.getPaginatedController.bind(announcementController)
 )
 
 announcementRouter.get(
