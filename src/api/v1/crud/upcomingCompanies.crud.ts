@@ -9,10 +9,12 @@ class UpcomingCompaniesCRUD extends CRUDBase<UpcomingCompaniesDTO> {
   }
 
   public async getCompaniesToApply(
-    userId: string
-  ): Promise<UpcomingCompaniesDTO[]> {
+    userId: string,
+    page: number,
+    limit: number
+  ): Promise<{data:UpcomingCompaniesDTO[], totalPages: number}> {
     try {
-      const data = await this.baseModel.aggregate([
+      const resp = await this.baseModel.aggregate([
         {
           $lookup: {
             from: 'submissions',
@@ -44,7 +46,6 @@ class UpcomingCompaniesCRUD extends CRUDBase<UpcomingCompaniesDTO> {
             ],
           },
         },
-        
         {
           $match: {
             $or:[
@@ -60,12 +61,66 @@ class UpcomingCompaniesCRUD extends CRUDBase<UpcomingCompaniesDTO> {
               },
               
             ]
-            
           },
+        },
+        {
+          $facet: {
+            totalPages: [
+              {
+                $group: {
+                  _id: null,
+                  total: { $sum: 1 },
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  total: {
+                    $ceil: {
+                      $divide: ['$total', limit],
+                    },
+                  },
+                },
+              },
+            ],
+            data: [
+              {
+                $sort: {
+                  createdAt: -1,
+                },
+              },
+              {
+                $skip: (page - 1) * limit,
+              },
+              {
+                $limit: limit,
+              },
+            ],
+          },
+        },
+        {
+          $project: {
+            data: '$data',
+            totalPages: '$totalPages.total',
+          },
+        },
+        {
+          $unwind: '$totalPages',
         },
       ])
 
-      return data
+      if (resp.length === 0) {
+        return {
+          data: [],
+          totalPages: 0,
+        }
+      }
+
+      return {
+        data: resp[0].data,
+        totalPages: resp[0].totalPages,
+      }
+
     } catch (e) {
       throw new HttpException(e?.errorCode, e?.message)
     }

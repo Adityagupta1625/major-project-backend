@@ -47,12 +47,31 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
         throw new HttpException(400, 'Invalid user Id')
       }
 
+      const query: any=req.query
+      if(typeof req.query?.page!=='string' || typeof req.query?.limit!=='string'){
+        throw new HttpException(400,'Page or limit not defined!!')
+      }
+
+      let page: string | number=req.query.page
+      let limit: string | number=req.query.limit
+
+      page=parseInt(page)
+      limit=parseInt(limit)
+
+      if(isNaN(page) || isNaN(limit))
+        throw new HttpException(400,'Invalid Page or limit value')
+
+      delete query.page
+      delete query.limit
+
       const data = await submissionsCRUD.getAppliedCompaniesByUser(
-        req.query.userId as string
+        req.query.userId as string,
+        page,
+        limit
       )
 
       const resp: any=[]
-      data.forEach((value)=>{
+      data.data.forEach((value)=>{
         resp.push({
           companyName: value.companyDetails.name,
           category: value.companyDetails.category,
@@ -61,7 +80,10 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
         })
       })
 
-      return res.status(200).json(resp)
+      return res.status(200).json({
+        data: data,
+        totalPages: data.totalPages
+      })
     } catch (e) {
       return await errorHandler(e, res)
     }

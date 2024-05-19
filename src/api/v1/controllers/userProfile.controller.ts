@@ -1,5 +1,3 @@
-import { ParamsDictionary } from 'express-serve-static-core'
-import { ParsedQs } from 'qs'
 import { BaseController, errorHandler } from '../../../utils'
 import { userProfileCRUD } from '../crud'
 import { type UserProfileDTO } from '../types'

@@ -147,7 +147,7 @@ export abstract class CRUDBase<T extends Document>
             data: [
               {
                 $sort: {
-                  createdAt: 1,
+                  createdAt: -1,
                 },
               },
               {
