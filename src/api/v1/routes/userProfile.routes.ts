@@ -9,7 +9,7 @@ userProfileRouter.get(
   '/all',
   authorizeAdmin,
   queryHandler,
-  userProfileController.getAllController.bind(userProfileController)
+  userProfileController.getPaginatedController.bind(userProfileController)
 )
 
 userProfileRouter.get(

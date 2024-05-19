@@ -15,7 +15,7 @@ upcomingCompaniesRouter.post(
 upcomingCompaniesRouter.get(
   '/',
   queryHandler,
-  upcomingCompaniesController.getAllController.bind(upcomingCompaniesController)
+  upcomingCompaniesController.getPaginatedController.bind(upcomingCompaniesController)
 )
 
 upcomingCompaniesRouter.get(
