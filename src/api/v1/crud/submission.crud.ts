@@ -1,8 +1,9 @@
 import { CRUDBase, HttpException } from '../../../utils'
 import { SubmissionsModel } from '../models'
 import { SubmissionDetailsWithCompany, type SubmissionsDTO } from '../types'
-import {  Types } from 'mongoose'
+import { Types } from 'mongoose'
 import { SubmissionDetailsWithUser, SubmissionDetailsByCompany } from '../types'
+import { Enum } from '../constants'
 
 class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
   constructor() {
@@ -10,8 +11,10 @@ class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
   }
 
   public async getSubmissionDetailsByCompanyId(
-    companyId: string
-  ): Promise<SubmissionDetailsWithUser[]> {
+    companyId: string,
+    page: number,
+    limit: number
+  ): Promise<{ data: SubmissionDetailsWithUser[]; totalPages: number }> {
     try {
       const data = await this.baseModel.aggregate([
         {
@@ -19,28 +22,84 @@ class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
             companyId: new Types.ObjectId(companyId),
           },
         },
+
         {
-          $lookup: {
-            from: 'userprofiles',
-            localField: 'userId',
-            foreignField: 'userId',
-            as: 'userProfile',
+          $facet: {
+            totalPages: [
+              {
+                $group: {
+                  _id: null,
+                  total: { $sum: 1 },
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  total: {
+                    $ceil: {
+                      $divide: ['$total', limit],
+                    },
+                  },
+                },
+              },
+            ],
+            data: [
+              {
+                $sort: {
+                  createdAt: -1,
+                },
+              },
+              {
+                $lookup: {
+                  from: 'userprofiles',
+                  localField: 'userId',
+                  foreignField: 'userId',
+                  as: 'userProfile',
+                },
+              },
+              {
+                $unwind: '$userProfile',
+              },
+              {
+                $project: {
+                  _id: 1,
+                  userProfile: 1,
+                  status: 1,
+                  comments: 1,
+                },
+              },
+
+              {
+                $skip: (page - 1) * limit,
+              },
+              {
+                $limit: limit,
+              },
+            ],
           },
-        },
-        {
-          $unwind: '$userProfile',
         },
         {
           $project: {
-            _id: 1,
-            userProfile: 1,
-            status: 1,
-            comments: 1,
+            data: '$data',
+            totalPages: '$totalPages.total',
           },
+        },
+        {
+          $unwind: '$totalPages',
         },
       ])
 
-      return data
+      if (data.length === 0) {
+        return {
+          data: [],
+          totalPages: 0,
+        }
+      }
+
+      return {
+        data: data[0].data,
+        totalPages: data[0].totalPages,
+      }
     } catch (e) {
       throw new HttpException(e?.errorCode, e?.message)
     }
@@ -225,6 +284,44 @@ class SubmissionsCRUD extends CRUDBase<SubmissionsDTO> {
         totalPages: data[0].totalPages,
         data: data[0].data,
       }
+    } catch (e) {
+      throw new HttpException(e?.errorCode, e?.message)
+    }
+  }
+
+  public async getAllSubmissionDetailsByCompanyId(
+    companyId: string
+  ): Promise<SubmissionDetailsWithUser[]> {
+    try {
+      const data = await this.baseModel.aggregate([
+        {
+          $match: {
+            companyId: new Types.ObjectId(companyId),
+            status: Enum.FormStatus.Accepted
+          },
+        },
+        {
+          $lookup: {
+            from: 'userprofiles',
+            localField: 'userId',
+            foreignField: 'userId',
+            as: 'userProfile',
+          },
+        },
+        {
+          $unwind: '$userProfile',
+        },
+        {
+          $project: {
+            _id: 1,
+            userProfile: 1,
+            status: 1,
+            comments: 1,
+          },
+        },
+      ])
+
+      return data
     } catch (e) {
       throw new HttpException(e?.errorCode, e?.message)
     }

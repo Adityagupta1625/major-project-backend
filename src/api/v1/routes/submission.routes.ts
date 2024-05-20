@@ -33,6 +33,11 @@ submissionRouter.get(
   submissionController.getByCompanyId.bind(submissionController)
 )
 
+submissionRouter.get(
+  '/company/all',
+  submissionController.getAllByCompanyId.bind(submissionController)
+)
+
 submissionRouter.post(
   '/comment',
   commentValidator.validateInput.bind(commentValidator),

@@ -98,12 +98,31 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
         throw new HttpException(400, 'Invalid company Id')
       }
 
+      const query: any=req.query
+      if(typeof req.query?.page!=='string' || typeof req.query?.limit!=='string'){
+        throw new HttpException(400,'Page or limit not defined!!')
+      }
+
+      let page: string | number=req.query.page
+      let limit: string | number=req.query.limit
+
+      page=parseInt(page)
+      limit=parseInt(limit)
+
+      if(isNaN(page) || isNaN(limit))
+        throw new HttpException(400,'Invalid Page or limit value')
+
+      delete query.page
+      delete query.limit
+
       const data = await submissionsCRUD.getSubmissionDetailsByCompanyId(
-        req.query.companyId as string
+        req.query.companyId as string,
+        page,
+        limit
       )
 
       const resp: any = []
-      data.forEach((value) => {
+      data.data.forEach((value) => {
         resp.push({
           _id: value._id,
           name: value.userProfile.name,
@@ -122,7 +141,10 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
         })
       })
 
-      return res.status(200).json(resp)
+      return res.status(200).json({
+        data: resp,
+        totalPages: data.totalPages
+      })
     } catch (e) {
       return await errorHandler(e, res)
     }
@@ -175,6 +197,43 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
       )
 
       return res.status(200).json(data)
+    } catch (e) {
+      return await errorHandler(e, res)
+    }
+  }
+
+  public async getAllByCompanyId(req: Request,res: Response): Promise<Response>{
+    try {
+      if (
+        typeof req.query.companyId !== 'string' ||
+        !isValidObjectId(req.query.companyId)
+      ) {
+        throw new HttpException(400, 'Invalid company Id')
+      }
+
+      const data=await submissionsCRUD.getAllSubmissionDetailsByCompanyId(req.query.companyId)
+     
+      const resp: any = []
+      data.forEach((value) => {
+        resp.push({
+          _id: value._id,
+          name: value.userProfile.name,
+          department: value.userProfile.department,
+          course: value.userProfile.course,
+          personalEmail: value.userProfile.personalEmail,
+          officialEmail: value.userProfile.officialEmail,
+          batch: value.userProfile.batch,
+          marks10: value.userProfile.marks10,
+          marks12: value.userProfile.marks12,
+          cgpa: value.userProfile.cgpa,
+          mobileNo: value.userProfile.mobileNo,
+          resume: value.userProfile.resume,
+          rollNo: value.userProfile.rollNo,
+          status: value.status,
+        })
+      })
+
+      return res.status(200).json(resp)
     } catch (e) {
       return await errorHandler(e, res)
     }
