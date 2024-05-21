@@ -81,7 +81,7 @@ class SubmissionController extends BaseController<SubmissionsDTO> {
       })
 
       return res.status(200).json({
-        data: data,
+        data: resp,
         totalPages: data.totalPages
       })
     } catch (e) {
